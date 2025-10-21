@@ -1,9 +1,15 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 // The Duck class represents a picture of a duck that can be drawn on the screen.
 public class illuminateShip {
@@ -22,6 +28,9 @@ public class illuminateShip {
     //variables for speed
     private int vx;
     private int vy;
+    
+    //debugging
+    public boolean debuging = true;
 
     // Constructor: runs when you make a new Duck object
     public illuminateShip() {
@@ -35,6 +44,11 @@ public class illuminateShip {
         x = 0;
         y = 0;
 
+        
+        //int the vx and vy
+        vx = 3;
+        vy = 2;
+        
         init(x, y); // Set up the starting location and size
     }
     
@@ -68,13 +82,54 @@ public class illuminateShip {
     
     // Changes the picture to a new image file
     public void changePicture(String imageFileName) {
-        img = getImage("/imgs/"+imageFileName);
+        try {
+            // Load fresh bytes to avoid GIF caching issues
+            InputStream is = getClass().getResourceAsStream("/imgs/" + imageFileName);
+            if (is != null) {
+                byte[] imageBytes = is.readAllBytes();
+                ImageIcon icon = new ImageIcon(imageBytes);
+                img = icon.getImage(); // Fresh image that will animate from the beginning
+            } else {
+                System.err.println("Could not find image: " + imageFileName);
+                img = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            img = null;
+        }
+
         init(x, y); // keep same location when changing image
+    
     }
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
+    	//x position updates based on vx
+    	x += vx;
+    	y += vy;
     	
+    	if(x > 1700) {
+    		vx *= -1;//bounce off the right side
+    	}
+    	if(x < 0) {
+    		vx *= -1;//bounce off the right side
+    	}
+    	if(y < 0) {
+    		vy *= -1;//bounce off the top side
+    	}
+    	if(vy == 12 && y > 640) {
+    	y = 0;
+    	x = (int)(Math.random()*1600);
+    	vx = (int)(Math.random()*16-8);
+    	vy = (int)(Math.random()*7+4);
+		changePicture("alienship normal.gif");
+    	} else if(y>640) {
+    	changePicture("alienship beam.gif");
+    	changePicture("alienship normal.gif");
+    	vy = -(int)(Math.random()*7+4);
+    	}
+
+
     }
     
     
@@ -85,6 +140,10 @@ public class illuminateShip {
         g2.drawImage(img, tx, null);      // Actually draw the duck image
         update();
         init(x,y);
+        
+        //create great hit box
+        g.setColor(Color.green);
+        g.drawRect((int)x, (int)y, 400, 200);
     }
     
     // Setup method: places the duck at (a, b) and scales it
@@ -117,5 +176,36 @@ public class illuminateShip {
         x = newX;
         y = newY;
         init(x, y);  // Keep current scale
+ 
     }
+    
+    //Collision and collision logic
+    public boolean checkCollision (int mX, int mY) {
+    	
+    	Rectangle mouse = new Rectangle(mX, mY, 50, 50);
+    	
+    	//reprent this object as a Rectangle
+    	Rectangle thisObject = new Rectangle((int)x, (int) y, 400, 200);
+    	
+    	
+    	if(mouse.intersects(thisObject)) {
+    		
+    		//logic if colliding
+    		vy = 12; // all y - gravity
+    		changePicture("alienship explosion.gif");
+    		
+    		return true;
+    	}else {
+    		
+    		//logic if not colliding
+    		
+    		return false;
+    	}
+    }
+    
+    
+    
+    
+    
+    
 }

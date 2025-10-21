@@ -32,7 +32,7 @@ public class Helldiver {
         // Default values
         scaleX = 1.0;
         scaleY = 1.0;
-        x = 300;
+        x = 100;
         y = 730;
 
         init(x, y); // Set up the starting location and size

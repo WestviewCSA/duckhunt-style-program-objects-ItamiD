@@ -1,7 +1,11 @@
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,11 +27,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	/**
 	 * Declare and instantiate (create) your objects here
 	 */
-	private Duck duckObject = new Duck();
 	private Background myBackground = new Background();
 	private Helldiver HelldiverObject = new Helldiver();
 	private illuminateShip enemyShip = new illuminateShip();
 	private MainCharATEmplacement myMain = new MainCharATEmplacement();
+
+	
+	
 	
 	public void paint(Graphics pen) {
 	
@@ -40,10 +46,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//call paint for the object
 		//for objects, you call methods on them using the dot operator
 		//methods use always involve parenthesis
-		duckObject.paint(pen);
+
 		myMain.paint(pen);
 		enemyShip.paint(pen);
-		
 		HelldiverObject.paint(pen);
 		
 		
@@ -57,6 +62,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseClicked(MouseEvent mouse) {
 	    // Runs when the mouse is clicked (pressed and released quickly).
 	    // Example: You could use this to open a menu or select an object.
+
 	}
 
 	@Override
@@ -75,6 +81,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mousePressed(MouseEvent mouse) {
 	    // Runs when a mouse button is pressed down.
 	    // Example: You could start dragging an object here.
+		System.out.println(mouse.getX()+":"+mouse.getY());
+		enemyShip.checkCollision(mouse.getX(), mouse.getY());
 	}
 
 	@Override
@@ -91,6 +99,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void keyPressed(KeyEvent key) {
 		
 		System.out.println("from keyPressed method:"+key.getKeyCode());
+		
+
 		
 	}
 
@@ -140,6 +150,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setLayout(new GridLayout(1,2));
 		f.addMouseListener(this);
 		f.addKeyListener(this);
+		
+		//cursor icon code
+		Toolkit toolkit =Toolkit.getDefaultToolkit();
+		Image image = toolkit.getImage("reticle.png");
+		Cursor a = toolkit.createCustomCursor(image, new Point(this.getX(), this.getY()), "");
+		this.setCursor(a);
+		
 		Timer t = new Timer(16, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,3 +164,4 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	}
 
 }
+

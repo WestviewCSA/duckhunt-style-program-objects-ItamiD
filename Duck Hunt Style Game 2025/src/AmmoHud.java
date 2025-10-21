@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 // The Duck class represents a picture of a duck that can be drawn on the screen.
-public class MainCharATEmplacement {
+public class AmmoHud {
     // Instance variables (data that belongs to each Duck object)
     private Image img;               // Stores the picture of the duck
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
@@ -24,22 +24,22 @@ public class MainCharATEmplacement {
     private int vy;
 
     // Constructor: runs when you make a new Duck object
-    public MainCharATEmplacement() {
-        img = getImage("/imgs/MainCharacterStill.png"); // Load the image file
+    public AmmoHud() {
+        img = getImage("/imgs/duck.gif"); // Load the image file
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
         // Default values
         scaleX = 1.0;
         scaleY = 1.0;
-        x = 1750;
-        y = 760;
+        x = 0;
+        y = 0;
 
         init(x, y); // Set up the starting location and size
     }
     
     //2nd constructor to initialize location and scale!
-    public MainCharATEmplacement(int x, int y, int scaleX, int scaleY) {
+    public AmmoHud(int x, int y, int scaleX, int scaleY) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -49,7 +49,7 @@ public class MainCharATEmplacement {
     }
     
     //2nd constructor to initialize location and scale!
-    public MainCharATEmplacement(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+    public AmmoHud(int x, int y, int scaleX, int scaleY, int vx, int vy) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -97,7 +97,7 @@ public class MainCharATEmplacement {
     private Image getImage(String path) {
         Image tempImage = null;
         try {
-            URL imageURL = MainCharATEmplacement.class.getResource(path);
+            URL imageURL = AmmoHud.class.getResource(path);
             tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
         } catch (Exception e) {
             e.printStackTrace();
