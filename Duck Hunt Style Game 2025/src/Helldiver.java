@@ -3,7 +3,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+
+import javax.swing.ImageIcon;
 
 // The Duck class represents a picture of a duck that can be drawn on the screen.
 public class Helldiver {
@@ -25,7 +29,7 @@ public class Helldiver {
 
     // Constructor: runs when you make a new Duck object
     public Helldiver() {
-        img = getImage("/imgs/Helldiver Salute.gif"); // Load the image file
+        img = getImage("/imgs/Helldiver.png"); // Load the image file
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
@@ -69,6 +73,23 @@ public class Helldiver {
     // Changes the picture to a new image file
     public void changePicture(String imageFileName) {
         img = getImage("/imgs/"+imageFileName);
+        
+        try {
+            // Load fresh bytes to avoid GIF caching issues
+            InputStream is = getClass().getResourceAsStream("/imgs/" + imageFileName);
+            if (is != null) {
+                byte[] imageBytes = is.readAllBytes();
+                ImageIcon icon = new ImageIcon(imageBytes);
+                img = icon.getImage(); // Fresh image that will animate from the beginning
+            } else {
+                System.err.println("Could not find image: " + imageFileName);
+                img = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            img = null;
+        }
+        
         init(x, y); // keep same location when changing image
     }
     

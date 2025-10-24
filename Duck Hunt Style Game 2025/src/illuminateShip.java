@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 
@@ -136,7 +137,8 @@ public class illuminateShip {
     	vy = (int)(Math.random()*7+4);
 		changePicture("alienship normal.gif");
     	} else if(y>640) {
-    	img = beam;
+    	changePicture("alienship beam.gif");
+
     	
     	changePicture("alienship normal.gif");
     	vy = -(int)(Math.random()*7+4);
@@ -200,13 +202,17 @@ public class illuminateShip {
     	//represent this object as a Rectangle
     	Rectangle thisObject = new Rectangle((int)x, (int) y, 400, 200);
     	
-    	
     	if(mouse.intersects(thisObject)) {
     		
     		//logic if colliding
     		vy = 12; // all y - gravity
     		changePicture("alienship explosion.gif");
     		return true;
+    		
+
+    		
+    		
+    		
     	}else {
     		
     		return false;

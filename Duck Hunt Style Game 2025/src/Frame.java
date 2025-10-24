@@ -30,13 +30,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	 * Declare and instantiate (create) your objects here
 	 */
 	private Background myBackground = new Background();
-	private Helldiver HelldiverObject = new Helldiver();
+	private Helldiver helldiverObject = new Helldiver();
 	private illuminateShip enemyShip1 = new illuminateShip();
 	private illuminateShip enemyShip2 = new illuminateShip();
 	private MainCharATEmplacement myMain = new MainCharATEmplacement();
 	private AmmoHud ammoHud = new AmmoHud();
 	private MyCursor myCursor = new MyCursor();
-	
+	private EndScreen ending = new EndScreen();
 	
 	
 	public void paint(Graphics pen) {
@@ -55,12 +55,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		myMain.paint(pen);
 		enemyShip1.paint(pen);
 		enemyShip2.paint(pen);
-		HelldiverObject.paint(pen);
+		helldiverObject.paint(pen);
 		
 		myCursor.paint(pen);
 		
 		
-		
+		if(ammoHud.ammoNumber() == -1) {
+			ending.paint(pen);
+		}
 		
 		
 	}
@@ -77,12 +79,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseEntered(MouseEvent mouse) {
 	    // Runs when the mouse enters the area of a component (like a button).
 	    // Example: You could highlight the button when the mouse hovers over it.
+		
+		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY())){
+			myCursor.changePicture("reticle lock fix.png");
+		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent mouse) {
 	    // Runs when the mouse leaves the area of a component.
 	    // Example: You could remove the highlight when the mouse moves away.
+		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false ){
+			myCursor.changePicture("reticle.png");
+		}
 	}
 
 	@Override
@@ -92,6 +103,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		System.out.println(mouse.getX()+":"+mouse.getY());
 		enemyShip1.checkCollision(mouse.getX(), mouse.getY());
 		enemyShip2.checkCollision(mouse.getX(), mouse.getY());
+		myMain.changePicture("MainCharacterMove.gif");
+		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
+			helldiverObject.changePicture("Helldiver Salute.gif");
+		}
 		if((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 3) {
 			ammoHud.changePicture("Ammo Hud element two shells.png");
@@ -115,6 +131,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseReleased(MouseEvent mouse) {
 	    // Runs when a mouse button is released.
 	    // Example: You could stop dragging the object or drop it in place.
+		helldiverObject.changePicture("Helldiver.png");
+		myMain.changePicture("MainCharacterStill.png");
+
 	}
 
 
