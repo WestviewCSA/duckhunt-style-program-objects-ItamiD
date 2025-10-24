@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,9 +31,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	 */
 	private Background myBackground = new Background();
 	private Helldiver HelldiverObject = new Helldiver();
-	private illuminateShip enemyShip = new illuminateShip();
+	private illuminateShip enemyShip1 = new illuminateShip();
+	private illuminateShip enemyShip2 = new illuminateShip();
 	private MainCharATEmplacement myMain = new MainCharATEmplacement();
-
+	private AmmoHud ammoHud = new AmmoHud();
+	private MyCursor myCursor = new MyCursor();
 	
 	
 	
@@ -43,13 +47,17 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//background should be drawn before the objects 
 		//or based on how you want to layer
 		myBackground.paint(pen);
+		ammoHud.paint(pen);
 		//call paint for the object
 		//for objects, you call methods on them using the dot operator
 		//methods use always involve parenthesis
-
+		
 		myMain.paint(pen);
-		enemyShip.paint(pen);
+		enemyShip1.paint(pen);
+		enemyShip2.paint(pen);
 		HelldiverObject.paint(pen);
+		
+		myCursor.paint(pen);
 		
 		
 		
@@ -62,7 +70,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseClicked(MouseEvent mouse) {
 	    // Runs when the mouse is clicked (pressed and released quickly).
 	    // Example: You could use this to open a menu or select an object.
-
+	
 	}
 
 	@Override
@@ -82,7 +90,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    // Runs when a mouse button is pressed down.
 	    // Example: You could start dragging an object here.
 		System.out.println(mouse.getX()+":"+mouse.getY());
-		enemyShip.checkCollision(mouse.getX(), mouse.getY());
+		enemyShip1.checkCollision(mouse.getX(), mouse.getY());
+		enemyShip2.checkCollision(mouse.getX(), mouse.getY());
+		if((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 3) {
+			ammoHud.changePicture("Ammo Hud element two shells.png");
+			ammoHud.shellLost();
+		} else if((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 2) {
+			ammoHud.changePicture("Ammo Hud element low ammo.png");
+			ammoHud.shellLost();
+		} else if ((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 1) {
+			ammoHud.changePicture("Ammo Hud Element.png");
+			ammoHud.shellLost();
+		} else {
+			ammoHud.changePicture("Ammo Hud element full ammo.png");
+			ammoHud.shellsReturned();
+		}
 	}
 
 	@Override

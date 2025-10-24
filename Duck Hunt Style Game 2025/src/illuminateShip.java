@@ -14,7 +14,13 @@ import javax.swing.ImageIcon;
 // The Duck class represents a picture of a duck that can be drawn on the screen.
 public class illuminateShip {
     // Instance variables (data that belongs to each Duck object)
-    private Image img;               // Stores the picture of the duck
+    private Image img;  
+    
+    private Image normal;
+    private Image beam;
+    
+    
+    // Stores the picture of the duck
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
 
     // Variables to control the size (scale) of the duck image
@@ -34,7 +40,11 @@ public class illuminateShip {
 
     // Constructor: runs when you make a new Duck object
     public illuminateShip() {
-        img = getImage("/imgs/alienship normal.gif"); // Load the image file
+        normal = getImage("/imgs/alienship normal.gif"); // Load the image file
+        
+        beam = getImage("/imgs/alienship beam.gif");
+        
+        img = normal;
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
@@ -114,17 +124,20 @@ public class illuminateShip {
     	if(x < 0) {
     		vx *= -1;//bounce off the right side
     	}
-    	if(y < 0) {
-    		vy *= -1;//bounce off the top side
+    	if(y < -200) {
+    		vy = (int)(Math.random()*7+4);;//bounce off the top side
+    		vx = (int)(Math.random()*16-8);
+    		x = (int)(Math.random()*1600);
     	}
     	if(vy == 12 && y > 640) {
-    	y = 0;
+    	y = -200;
     	x = (int)(Math.random()*1600);
     	vx = (int)(Math.random()*16-8);
     	vy = (int)(Math.random()*7+4);
 		changePicture("alienship normal.gif");
     	} else if(y>640) {
-    	changePicture("alienship beam.gif");
+    	img = beam;
+    	
     	changePicture("alienship normal.gif");
     	vy = -(int)(Math.random()*7+4);
     	}
@@ -184,7 +197,7 @@ public class illuminateShip {
     	
     	Rectangle mouse = new Rectangle(mX, mY, 50, 50);
     	
-    	//reprent this object as a Rectangle
+    	//represent this object as a Rectangle
     	Rectangle thisObject = new Rectangle((int)x, (int) y, 400, 200);
     	
     	
@@ -193,11 +206,8 @@ public class illuminateShip {
     		//logic if colliding
     		vy = 12; // all y - gravity
     		changePicture("alienship explosion.gif");
-    		
     		return true;
     	}else {
-    		
-    		//logic if not colliding
     		
     		return false;
     	}

@@ -1,22 +1,17 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 // The Duck class represents a picture of a duck that can be drawn on the screen.
-public class AmmoHud {
+public class MyCursor {
     // Instance variables (data that belongs to each Duck object)
-    private Image img;     // Stores the picture of the duck
-    private Image lowAmmo;
-    private Image twoShells;
-    private Image fullAmmo;
-    private Image emptyAmmo;
-    
-    
-    
-    
+    private Image img;               // Stores the picture of the duck
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
 
     // Variables to control the size (scale) of the duck image
@@ -25,35 +20,28 @@ public class AmmoHud {
 
     // Variables to control the location (x and y position) of the duck
     private double x;                
-    private double y;     
-    
-    //ammo count
-    private int shells = 3;
+    private double y;        
     
 
     // Constructor: runs when you make a new Duck object
-    public AmmoHud() {
-         // Load the image file
-        
-        fullAmmo = getImage("/imgs/Ammo Hud element full ammo.png");
-        twoShells = getImage("/imgs/Ammo Hud element two shells.png");
-        lowAmmo = getImage("/imgs/Ammo Hud element low ammo.png");
-        emptyAmmo = getImage("/imgs/Ammo Hud Element.png");
-        img = fullAmmo;
+    public MyCursor() { 
+    	
+        img = getImage("/imgs/reticle.png"); // Load the image file
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
         // Default values
-        scaleX = 0.5;
-        scaleY = 0.5;
+        scaleX = 0.3;
+        scaleY = 0.3;
         x = 0;
-        y = 850;
+        y = 0;
+
 
         init(x, y); // Set up the starting location and size
     }
     
     //2nd constructor to initialize location and scale!
-    public AmmoHud(int x, int y, int scaleX, int scaleY) {
+    public MyCursor(int x, int y, int scaleX, int scaleY) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -62,8 +50,16 @@ public class AmmoHud {
     	init(x,y);
     }
     
+    //2nd constructor to initialize location and scale!
+    public MyCursor(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+    	this();
+    	this.x 		= x;
+    	this.y 		= y;
+    	this.scaleX = scaleX;
+    	this.scaleY = scaleY;
+    	init(x,y);
+    }
 
-    
     
     
     // Changes the picture to a new image file
@@ -72,31 +68,16 @@ public class AmmoHud {
         init(x, y); // keep same location when changing image
     }
     
-    //update any variables for the object such as x, y, vx, vy
-    public void update() {
-
-  
-    	
-    }
-   public int ammoNumber() {
-	   return shells;
-
-   }
-   public void shellLost() {  
-	   shells -= 1;
-	   update();
-   }
-   public void shellsReturned() {
-	   img = fullAmmo;
-	   shells = 3;
-	   update();
-   }
-    
+   
     // Draws the duck on the screen
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;   // Graphics2D lets us draw images
+        tx.scale(scaleX, scaleY);//<-- original down or up scale
         g2.drawImage(img, tx, null);      // Actually draw the duck image
-        update();
+        
+    	x = MouseInfo.getPointerInfo().getLocation().getX()-50;
+    	y = MouseInfo.getPointerInfo().getLocation().getY()-50;
+
         init(x,y);
     }
     
@@ -110,7 +91,7 @@ public class AmmoHud {
     private Image getImage(String path) {
         Image tempImage = null;
         try {
-            URL imageURL = AmmoHud.class.getResource(path);
+            URL imageURL = MyCursor.class.getResource(path);
             tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,4 +112,8 @@ public class AmmoHud {
         y = newY;
         init(x, y);  // Keep current scale
     }
-}
+   
+    
+    
+    
+} //<--closing bracket for class dont delete- add above!
