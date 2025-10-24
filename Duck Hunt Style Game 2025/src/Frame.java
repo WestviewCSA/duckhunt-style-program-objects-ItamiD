@@ -104,7 +104,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 1) {
 			ammoHud.changePicture("Ammo Hud Element.png");
 			ammoHud.shellLost();
-		} else {
+		} else if ((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) && 
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) && ammoHud.ammoNumber() == 1){
 			ammoHud.changePicture("Ammo Hud element full ammo.png");
 			ammoHud.shellsReturned();
 		}
