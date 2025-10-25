@@ -38,12 +38,25 @@ public class illuminateShip {
     
     //debugging
     public boolean debuging = true;
+    
+    int mouseX;
+    int mouseY;
+    
+    //Animation timing variables
+    //variables if animating and timing
+    private boolean isBeaming = false;
+    private long beamStartTime;
+    private long beamDuration = 1000;
 
+    private boolean isExploding = false;
+    private long explodingStartTime;
+    private long explodingDuration = 900;
+    
     // Constructor: runs when you make a new Duck object
     public illuminateShip() {
         normal = getImage("/imgs/alienship normal.gif"); // Load the image file
         
-        beam = getImage("/imgs/alienship beam.gif");
+        beam = getImage("/imgs/alienship beam a.gif");
         
         img = normal;
         
@@ -115,6 +128,31 @@ public class illuminateShip {
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
+    	
+    	if(isBeaming) {
+    		long elapsed = System.currentTimeMillis() - beamStartTime;
+    		if(elapsed >= beamDuration && isExploding == false) {
+    	    	changePicture("alienship normal.gif");
+    	    	isBeaming = false;
+    	    	vy = -(int)(Math.random()*7+4);
+    		} else if(isExploding){
+    			long elapsed2 = System.currentTimeMillis() - explodingStartTime;
+    			if(elapsed2 >= explodingDuration) {
+    				isBeaming = false;
+    				isExploding = false;
+        	    	changePicture("alienship normal.gif");
+            		y = -200;
+            		x = (int)(Math.random()*1600);
+            		vx = (int)(Math.random()*16-8);
+            		vy = (int)(Math.random()*7+4);
+    			}
+    		}
+        		
+    		return; //skip movement update while beaming
+    	}
+    	
+    	
+    	
     	//x position updates based on vx
     	x += vx;
     	y += vy;
@@ -130,18 +168,21 @@ public class illuminateShip {
     		vx = (int)(Math.random()*16-8);
     		x = (int)(Math.random()*1600);
     	}
-    	if(vy == 12 && y > 640) {
-    	y = -200;
-    	x = (int)(Math.random()*1600);
-    	vx = (int)(Math.random()*16-8);
-    	vy = (int)(Math.random()*7+4);
-		changePicture("alienship normal.gif");
-    	} else if(y>640) {
-    	changePicture("alienship beam.gif");
+    	if(vy == 12 && y > 800) {
+    		y = -200;
+    		x = (int)(Math.random()*1600);
+    		vx = (int)(Math.random()*16-8);
+    		vy = (int)(Math.random()*7+4);
+    		changePicture("alienship normal.gif");
+    		isExploding = false;
+    		isBeaming = false;
+    	} else if(vy != 12 && y>640) {
+    		changePicture("alienship beam a.gif");
+    		isBeaming = true;
+    		beamStartTime = System.currentTimeMillis();
+    		//delay wanted here for the animation to finish!
+    		
 
-    	
-    	changePicture("alienship normal.gif");
-    	vy = -(int)(Math.random()*7+4);
     	}
 
 
@@ -207,8 +248,11 @@ public class illuminateShip {
     		//logic if colliding
     		vy = 12; // all y - gravity
     		changePicture("alienship explosion.gif");
+    		mouseX = mX;
+    		mouseY = mY;
+    		isExploding = true;
+    		explodingStartTime = System.currentTimeMillis();
     		return true;
-    		
 
     		
     		

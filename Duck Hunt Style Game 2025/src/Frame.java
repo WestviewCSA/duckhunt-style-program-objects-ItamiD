@@ -80,20 +80,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    // Runs when the mouse enters the area of a component (like a button).
 	    // Example: You could highlight the button when the mouse hovers over it.
 		
-		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
-				enemyShip2.checkCollision(mouse.getX(), mouse.getY())){
-			myCursor.changePicture("reticle lock fix.png");
-		}
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent mouse) {
 	    // Runs when the mouse leaves the area of a component.
 	    // Example: You could remove the highlight when the mouse moves away.
-		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
-				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false ){
-			myCursor.changePicture("reticle.png");
-		}
+
 	}
 
 	@Override
@@ -121,7 +115,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			ammoHud.changePicture("Ammo Hud Element.png");
 			ammoHud.shellLost();
 		} else if ((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) && 
-				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) && ammoHud.ammoNumber() == 1){
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) 
+				&& (ammoHud.ammoNumber() == 1 || ammoHud.ammoNumber() == 2)){
 			ammoHud.changePicture("Ammo Hud element full ammo.png");
 			ammoHud.shellsReturned();
 		}

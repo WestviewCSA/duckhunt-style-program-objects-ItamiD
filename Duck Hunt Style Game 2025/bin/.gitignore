@@ -1,6 +1,7 @@
 /AmmoHud.class
 /Background.class
 /Duck.class
+/EndScreen.class
 /Frame.class
 /Helldiver.class
 /MainCharATEmplacement.class
@@ -8,4 +9,3 @@
 /MyCursor.class
 /illuminateShip.class
 /imgs/
-/EndScreen.class

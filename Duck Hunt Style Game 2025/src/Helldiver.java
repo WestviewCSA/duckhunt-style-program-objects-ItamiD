@@ -26,6 +26,11 @@ public class Helldiver {
     //variables for speed
     private int vx;
     private int vy;
+    
+    //variables if animating and timing
+    private boolean isAnimating;
+    private long animationStartTime;
+    private long animationDuration = 1000;
 
     // Constructor: runs when you make a new Duck object
     public Helldiver() {
@@ -98,7 +103,22 @@ public class Helldiver {
     	
     }
     
+    public void startAnimation( ) {
+    	isAnimating = true;
+    	animationStartTime = System.currentTimeMillis();
+    }
     
+    public void update(long deltaTime) {
+    	if(isAnimating) {
+    		long elapsed = System.currentTimeMillis() - animationStartTime;
+    		if(elapsed >= animationDuration) {
+    			//animation done
+    			isAnimating = false;
+    		}
+    		//during animation, don't update other logic
+    		return;
+    	}
+    }
     
     // Draws the duck on the screen
     public void paint(Graphics g) {

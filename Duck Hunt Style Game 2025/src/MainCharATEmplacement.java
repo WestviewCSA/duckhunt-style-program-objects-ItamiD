@@ -36,7 +36,7 @@ public class MainCharATEmplacement {
         // Default values
         scaleX = 1.0;
         scaleY = 1.0;
-        x = 1750;
+        x = 1600;
         y = 760;
 
         init(x, y); // Set up the starting location and size
