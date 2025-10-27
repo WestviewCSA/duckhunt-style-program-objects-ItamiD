@@ -44,7 +44,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	//music
 	Music mouseClickSound = new Music("cannon_fire.wav", false);
-	Music explosionSound = new Music("explosion_of_ship.wav", false);
+	Music explosionSound = new Music("mixkit-explosion-in-battle-2809.wav", false);
 
 	
 	public void paint(Graphics pen) {
