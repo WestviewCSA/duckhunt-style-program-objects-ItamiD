@@ -52,6 +52,10 @@ public class illuminateShip {
     private long explodingStartTime;
     private long explodingDuration = 900;
     
+    //Escape count
+    public static int escapes;
+    
+    
     // Constructor: runs when you make a new Duck object
     public illuminateShip() {
         normal = getImage("/imgs/alienship normal.gif"); // Load the image file
@@ -101,6 +105,15 @@ public class illuminateShip {
     public void setVelocityVariables(int vx, int vy) {
     	this.vx = vx;
     	this.vy = vy;
+    }
+    public static boolean tooManyEscapes() {
+    	if (escapes >= 10) {
+        	return true;
+    	} else {
+    		return false;
+    	}
+    	
+
     }
     
     
@@ -163,10 +176,11 @@ public class illuminateShip {
     	if(x < 0) {
     		vx *= -1;//bounce off the right side
     	}
-    	if(y < -200) {
+    	if(y < -400) {
     		vy = (int)(Math.random()*7+4);;//bounce off the top side
     		vx = (int)(Math.random()*16-8);
     		x = (int)(Math.random()*1600);
+    		escapes++;
     	}
     	if(vy == 12 && y > 800) {
     		y = -200;
@@ -254,8 +268,7 @@ public class illuminateShip {
     		explodingStartTime = System.currentTimeMillis();
     		return true;
 
-    		
-    		
+
     		
     	}else {
     		

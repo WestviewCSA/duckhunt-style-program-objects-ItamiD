@@ -100,12 +100,19 @@ public class Helldiver {
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
-    	
+    	if(isAnimating) {
+    		long elapsed = System.currentTimeMillis() - animationStartTime;
+    		if(elapsed >= animationDuration) {
+    			changePicture("Helldiver.png");
+    			isAnimating = false;
+    		}
+    	}
     }
     
     public void startAnimation( ) {
     	isAnimating = true;
     	animationStartTime = System.currentTimeMillis();
+    	changePicture("Helldiver Salute.gif");
     }
     
     public void update(long deltaTime) {

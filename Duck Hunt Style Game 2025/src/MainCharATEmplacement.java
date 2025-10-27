@@ -26,6 +26,11 @@ public class MainCharATEmplacement {
     //variables for speed
     private int vx;
     private int vy;
+    
+  //variables if animating and timing
+    private boolean isAnimating;
+    private long animationStartTime;
+    private long animationDuration = 400;
 
     // Constructor: runs when you make a new Duck object
     public MainCharATEmplacement() {
@@ -95,9 +100,21 @@ public class MainCharATEmplacement {
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
-    	
+    	if(isAnimating) {
+    		long elapsed = System.currentTimeMillis() - animationStartTime;
+    		if(elapsed >= animationDuration) {
+    			changePicture("MainCharacterStill.png");
+    			isAnimating = false;
+    		}
+    	}
     }
     
+    public void startAnimation() {
+    	isAnimating = true;
+    	animationStartTime = System.currentTimeMillis();
+    	changePicture("MainCharacterMove.gif");
+
+    }
     
     
     // Draws the duck on the screen

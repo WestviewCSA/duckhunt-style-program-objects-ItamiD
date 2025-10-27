@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -37,7 +38,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private AmmoHud ammoHud = new AmmoHud();
 	private MyCursor myCursor = new MyCursor();
 	private EndScreen ending = new EndScreen();
+	private int kills;
 	
+	
+	
+	//music
+	Music mouseClickSound = new Music("cannon_fire.wav", false);
+	Music explosionSound = new Music("explosion_of_ship.wav", false);
+
 	
 	public void paint(Graphics pen) {
 	
@@ -59,8 +67,17 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		myCursor.paint(pen);
 		
+		Font f = new Font("Segoe UI", Font.PLAIN, 30);
+		pen.setFont(f);
+		pen.setColor(Color.white);
+		pen.drawString("Number of Kills " + kills + "/30", 1600, 50);
+		pen.drawString("WAVE " , 1600, 90);
 		
-		if(ammoHud.ammoNumber() == -1) {
+		
+		
+		
+		
+		if(ammoHud.ammoNumber() <= 0 || illuminateShip.tooManyEscapes()) {
 			ending.paint(pen);
 		}
 		
@@ -97,10 +114,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		System.out.println(mouse.getX()+":"+mouse.getY());
 		enemyShip1.checkCollision(mouse.getX(), mouse.getY());
 		enemyShip2.checkCollision(mouse.getX(), mouse.getY());
-		myMain.changePicture("MainCharacterMove.gif");
+		myMain.startAnimation();
+		this.mouseClickSound.play();
+		
+		
 		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
-			helldiverObject.changePicture("Helldiver Salute.gif");
+			helldiverObject.startAnimation();
+			kills++;
+			System.out.println("Kill count " + kills);
+			this.explosionSound.play();
+		}
+		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) &&
+				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
+			helldiverObject.startAnimation();
+			kills++;
+			System.out.println("Kill count " + kills);
 		}
 		if((enemyShip1.checkCollision(mouse.getX(), mouse.getY()) == false && 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY()) == false) && ammoHud.ammoNumber() == 3) {
@@ -126,8 +155,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseReleased(MouseEvent mouse) {
 	    // Runs when a mouse button is released.
 	    // Example: You could stop dragging the object or drop it in place.
-		helldiverObject.changePicture("Helldiver.png");
-		myMain.changePicture("MainCharacterStill.png");
+		helldiverObject.update();
+		myMain.update();
 
 	}
 
