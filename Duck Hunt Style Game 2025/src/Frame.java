@@ -45,7 +45,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//music
 	Music mouseClickSound = new Music("cannon_fire.wav", false);
 	Music explosionSound = new Music("mixkit-explosion-in-battle-2809.wav", false);
-
+	Music mainTheme = new Music("mainThemeSpaceDebris.wav", true);
 	
 	public void paint(Graphics pen) {
 	
@@ -220,6 +220,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.addMouseListener(this);
 		f.addKeyListener(this);
 		
+		this.mainTheme.play();
 		//cursor icon code
 		Toolkit toolkit =Toolkit.getDefaultToolkit();
 		Image image = toolkit.getImage("reticle.png");
