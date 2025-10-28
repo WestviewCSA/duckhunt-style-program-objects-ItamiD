@@ -3,14 +3,10 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-
 // The Duck class represents a picture of a duck that can be drawn on the screen.
-public class Helldiver {
+public class Foreground {
     // Instance variables (data that belongs to each Duck object)
     private Image img;               // Stores the picture of the duck
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
@@ -26,29 +22,24 @@ public class Helldiver {
     //variables for speed
     private int vx;
     private int vy;
-    
-    //variables if animating and timing
-    private boolean isAnimating;
-    private long animationStartTime;
-    private long animationDuration = 1000;
 
     // Constructor: runs when you make a new Duck object
-    public Helldiver() {
-        img = getImage("/imgs/Helldiver.png"); // Load the image file
+    public Foreground() {
+        img = getImage("/imgs/foreground.png"); // Load the image file
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
         // Default values
         scaleX = 1.0;
         scaleY = 1.0;
-        x = 100;
-        y = 980;
+        x = 0;
+        y = 0;
 
         init(x, y); // Set up the starting location and size
     }
     
     //2nd constructor to initialize location and scale!
-    public Helldiver(int x, int y, int scaleX, int scaleY) {
+    public Foreground(int x, int y, int scaleX, int scaleY) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -58,7 +49,7 @@ public class Helldiver {
     }
     
     //2nd constructor to initialize location and scale!
-    public Helldiver(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+    public Foreground(int x, int y, int scaleX, int scaleY, int vx, int vy) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -78,44 +69,15 @@ public class Helldiver {
     // Changes the picture to a new image file
     public void changePicture(String imageFileName) {
         img = getImage("/imgs/"+imageFileName);
-        
-        try {
-            // Load fresh bytes to avoid GIF caching issues
-            InputStream is = getClass().getResourceAsStream("/imgs/" + imageFileName);
-            if (is != null) {
-                byte[] imageBytes = is.readAllBytes();
-                ImageIcon icon = new ImageIcon(imageBytes);
-                img = icon.getImage(); // Fresh image that will animate from the beginning
-            } else {
-                System.err.println("Could not find image: " + imageFileName);
-                img = null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            img = null;
-        }
-        
         init(x, y); // keep same location when changing image
     }
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
-    	if(isAnimating) {
-    		long elapsed = System.currentTimeMillis() - animationStartTime;
-    		if(elapsed >= animationDuration) {
-    			changePicture("Helldiver.png");
-    			isAnimating = false;
-    		}
-    	}
+    	
     }
     
-    public void startAnimation( ) {
-    	isAnimating = true;
-    	animationStartTime = System.currentTimeMillis();
-    	changePicture("Helldiver Salute.gif");
-    }
     
-
     
     // Draws the duck on the screen
     public void paint(Graphics g) {
@@ -135,7 +97,7 @@ public class Helldiver {
     private Image getImage(String path) {
         Image tempImage = null;
         try {
-            URL imageURL = Helldiver.class.getResource(path);
+            URL imageURL = Foreground.class.getResource(path);
             tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
         } catch (Exception e) {
             e.printStackTrace();
