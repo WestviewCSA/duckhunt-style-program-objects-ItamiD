@@ -74,7 +74,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		pen.drawString("Number of Kills " + kills + "/40", 1600, 50);
 		pen.drawString("WAVE:  " + wave , 1600, 90);
 		
-		if(wave >= 4) {
+		if(wave >= 5) {
 			ending.paint(pen);
 			ending.changePicture("Victory for the helldivers.png");
 		}
@@ -162,17 +162,17 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    // Example: You could stop dragging the object or drop it in place.
 		helldiverObject.update();
 		myMain.update();
-		if(kills == 10) {
-			wave++;
+		if(kills >= 10 && kills < 20) {
+			wave = 2;
 		}
-		if(kills == 20) {
-			wave++;
+		if(kills >= 20 && kills < 30) {
+			wave = 3;
 		}
-		if(kills == 30) {
-			wave++;
+		if(kills >= 30 && kills < 40) {
+			wave = 4;
 		}
-		if(kills == 40) {
-			wave++;
+		if(kills >= 40) {
+			wave = 5;
 		}
 	}
 
