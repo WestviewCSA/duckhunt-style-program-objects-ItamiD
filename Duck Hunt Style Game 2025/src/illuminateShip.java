@@ -170,7 +170,7 @@ public class illuminateShip {
     	x += vx;
     	y += vy;
     	
-    	if(x > 1700) {
+    	if(x > 1600) {
     		vx *= -1;//bounce off the right side
     	}
     	if(x < 0) {

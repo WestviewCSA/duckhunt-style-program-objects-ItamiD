@@ -39,13 +39,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private MyCursor myCursor = new MyCursor();
 	private EndScreen ending = new EndScreen();
 	private int kills;
-	
+	private int wave = 1;
 	
 	
 	//music
 	Music mouseClickSound = new Music("cannon_fire.wav", false);
 	Music explosionSound = new Music("mixkit-explosion-in-battle-2809.wav", false);
 	Music mainTheme = new Music("mainThemeSpaceDebris.wav", true);
+	Music losingtheme = new Music("sci-fi-alarm-106436.wav",false);
 	
 	public void paint(Graphics pen) {
 	
@@ -70,15 +71,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		Font f = new Font("Segoe UI", Font.PLAIN, 30);
 		pen.setFont(f);
 		pen.setColor(Color.white);
-		pen.drawString("Number of Kills " + kills + "/30", 1600, 50);
-		pen.drawString("WAVE " , 1600, 90);
+		pen.drawString("Number of Kills " + kills + "/40", 1600, 50);
+		pen.drawString("WAVE:  " + wave , 1600, 90);
 		
-		
+		if(wave >= 4) {
+			ending.paint(pen);
+			ending.changePicture("Victory for the helldivers.png");
+		}
 		
 		
 		
 		if(ammoHud.ammoNumber() <= 0 || illuminateShip.tooManyEscapes()) {
 			ending.paint(pen);
+			this.losingtheme.play();
 		}
 		
 		
@@ -116,7 +121,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		enemyShip2.checkCollision(mouse.getX(), mouse.getY());
 		myMain.startAnimation();
 		this.mouseClickSound.play();
-		
+
 		
 		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
@@ -157,7 +162,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    // Example: You could stop dragging the object or drop it in place.
 		helldiverObject.update();
 		myMain.update();
-
+		if(kills == 10) {
+			wave++;
+		}
+		if(kills == 20) {
+			wave++;
+		}
+		if(kills == 30) {
+			wave++;
+		}
+		if(kills == 40) {
+			wave++;
+		}
 	}
 
 
@@ -221,6 +237,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.addKeyListener(this);
 		
 		this.mainTheme.play();
+		
+
+		
+		
 		//cursor icon code
 		Toolkit toolkit =Toolkit.getDefaultToolkit();
 		Image image = toolkit.getImage("reticle.png");
