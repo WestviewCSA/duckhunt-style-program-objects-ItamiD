@@ -42,7 +42,7 @@ public class Helldiver {
         scaleX = 1.0;
         scaleY = 1.0;
         x = 100;
-        y = 980;
+        y = 700;
 
         init(x, y); // Set up the starting location and size
     }
@@ -109,10 +109,11 @@ public class Helldiver {
     	}
     }
     
-    public void startAnimation( ) {
+    public void startAnimation() {
     	isAnimating = true;
     	animationStartTime = System.currentTimeMillis();
     	changePicture("Helldiver Salute.gif");
+ 
     }
     
 
@@ -151,9 +152,14 @@ public class Helldiver {
     }
 
     // NEW: Method to set location
-    public void setLocation(double newX, double newY) {
+    public void setLocation (double newX, double newY) {
         x = newX;
         y = newY;
         init(x, y);  // Keep current scale
     }
+    public void setLocationX (double newX) {
+    	x = newX;
+    	init(x,y);
+    }
+
 }

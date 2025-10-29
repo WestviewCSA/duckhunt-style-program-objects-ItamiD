@@ -116,9 +116,7 @@ public class illuminateShip {
 
     }
     
-    public double getXposition() {
-    	return x;
-    }
+
     
     // Changes the picture to a new image file
     public void changePicture(String imageFileName) {

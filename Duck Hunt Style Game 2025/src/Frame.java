@@ -129,6 +129,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
 			helldiverObject.startAnimation();
+			helldiverObject.setLocationX(mouse.getX()-150);
+			
 			kills++;
 			System.out.println("Kill count " + kills);
 			this.explosionSound.play();
