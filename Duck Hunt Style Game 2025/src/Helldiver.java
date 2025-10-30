@@ -28,7 +28,7 @@ public class Helldiver {
     private int vy;
     
     //variables if animating and timing
-    private boolean isAnimating;
+    private boolean isAnimating = false;
     private long animationStartTime;
     private long animationDuration = 1000;
 
@@ -42,7 +42,7 @@ public class Helldiver {
         scaleX = 1.0;
         scaleY = 1.0;
         x = 100;
-        y = 700;
+        y = 1000;
 
         init(x, y); // Set up the starting location and size
     }
@@ -100,20 +100,39 @@ public class Helldiver {
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
+		if (y < 710 && isAnimating) {
+			vy= 0;
+		}
+		
     	if(isAnimating) {
+
     		long elapsed = System.currentTimeMillis() - animationStartTime;
     		if(elapsed >= animationDuration) {
     			changePicture("Helldiver.png");
+    			vy = 9 ;
     			isAnimating = false;
     		}
     	}
+		y += vy;
+		
+		if (y > 1000) {
+			vy= 0;
+		}
+
     }
     
-    public void startAnimation() {
+    public void startAnimation(int newX) {
+    	if (isAnimating = false) {
+    	
+    	}
+    	setLocationX(newX);
     	isAnimating = true;
     	animationStartTime = System.currentTimeMillis();
     	changePicture("Helldiver Salute.gif");
- 
+    	y= 1000;
+    	vy = -12;
+    	y += vy;
+
     }
     
 
@@ -161,5 +180,7 @@ public class Helldiver {
     	x = newX;
     	init(x,y);
     }
+
+
 
 }

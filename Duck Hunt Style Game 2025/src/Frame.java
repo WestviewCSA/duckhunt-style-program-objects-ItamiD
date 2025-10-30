@@ -57,14 +57,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//background should be drawn before the objects 
 		//or based on how you want to layer
 		myBackground.paint(pen);
-
+		myMain.paint(pen);
 		//call paint for the object
 		//for objects, you call methods on them using the dot operator
 		//methods use always involve parenthesis
+		
+		
 		helldiverObject.paint(pen);
 		myForeground.paint(pen);
 		
-		myMain.paint(pen);
+
 		enemyShip1.paint(pen);
 		enemyShip2.paint(pen);
 		ammoHud.paint(pen);
@@ -128,8 +130,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) || 
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
-			helldiverObject.startAnimation();
-			helldiverObject.setLocationX(mouse.getX()-150);
+			helldiverObject.startAnimation(mouse.getX()-150);
+
 			
 			kills++;
 			System.out.println("Kill count " + kills);
@@ -138,7 +140,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if(enemyShip1.checkCollision(mouse.getX(), mouse.getY()) &&
 				enemyShip2.checkCollision(mouse.getX(), mouse.getY())) {
-			helldiverObject.startAnimation();
+			helldiverObject.startAnimation(mouse.getX()-150);
 			kills++;
 			System.out.println("Kill count " + kills);
 		}
