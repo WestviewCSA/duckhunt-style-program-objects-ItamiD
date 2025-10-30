@@ -73,13 +73,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		ammoHud.paint(pen);
 		
 		myCursor.paint(pen);
-		
+		Color myWhite = new Color(252, 238, 184);
 		Font f = new Font("Segoe UI", Font.PLAIN, 30);
 		pen.setFont(f);
-		pen.setColor(Color.white);
+		pen.setColor(myWhite);
 		pen.drawString("Number of Kills " + kills + "/40", 1600, 50);
 		pen.drawString("WAVE:  " + wave , 1600, 90);
-		
+		pen.drawRect(1580, 20, 380, 90);
 		if(wave >= 5) {
 			ending.paint(pen);
 			ending.changePicture("Victory for the helldivers.png");

@@ -50,7 +50,7 @@ public class illuminateShip {
 
     private boolean isExploding = false;
     private long explodingStartTime;
-    private long explodingDuration = 900;
+    private long explodingDuration = 500;
     
     //Escape count
     public static int escapes;
@@ -75,7 +75,7 @@ public class illuminateShip {
         
         //int the vx and vy
         vx = 3;
-        vy = 2;
+        vy = 3;
         
         init(x, y); // Set up the starting location and size
     }
