@@ -43,7 +43,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private int wave = 1;
 	
 	
-	//music
+	//music some of the files do not work as intended because the frequency is wrong
 	Music mouseClickSound = new Music("cannon_fire.wav", false);
 	Music explosionSound = new Music("mixkit-explosion-in-battle-2809.wav", false);
 	Music mainTheme = new Music("mainThemeSpaceDebris.wav", true);
