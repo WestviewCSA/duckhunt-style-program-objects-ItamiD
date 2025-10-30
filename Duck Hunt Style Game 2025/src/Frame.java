@@ -48,6 +48,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Music explosionSound = new Music("mixkit-explosion-in-battle-2809.wav", false);
 	Music mainTheme = new Music("mainThemeSpaceDebris.wav", true);
 	Music losingtheme = new Music("sci-fi-alarm-106436.wav",false);
+	Music winTheme = new Music("orchestral-win.wav", false);
 	
 	public void paint(Graphics pen) {
 	
@@ -82,6 +83,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(wave >= 5) {
 			ending.paint(pen);
 			ending.changePicture("Victory for the helldivers.png");
+			this.winTheme.play();
 		}
 		
 		
