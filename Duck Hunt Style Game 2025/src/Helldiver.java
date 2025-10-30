@@ -109,7 +109,7 @@ public class Helldiver {
     		long elapsed = System.currentTimeMillis() - animationStartTime;
     		if(elapsed >= animationDuration) {
     			changePicture("Helldiver.png");
-    			vy = 9 ;
+    			vy = 10 ;
     			isAnimating = false;
     		}
     	}
@@ -130,7 +130,7 @@ public class Helldiver {
     	animationStartTime = System.currentTimeMillis();
     	changePicture("Helldiver Salute.gif");
     	y= 1000;
-    	vy = -12;
+    	vy = -15;
     	y += vy;
 
     }

@@ -37,7 +37,7 @@ public class illuminateShip {
     private int vy;
     
     //debugging
-    public boolean debuging = true;
+    public boolean debuging = false;
     
     int mouseX;
     int mouseY;
@@ -213,8 +213,11 @@ public class illuminateShip {
         init(x,y);
         
         //create great hit box
-        g.setColor(Color.green);
-        g.drawRect((int)x, (int)y, 400, 200);
+        if (debuging) {
+            g.setColor(Color.green);
+            g.drawRect((int)x, (int)y, 400, 200);
+        }
+
     }
     
     // Setup method: places the duck at (a, b) and scales it
